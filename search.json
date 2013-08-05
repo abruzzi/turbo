@@ -1,0 +1,20 @@
+{
+	"baseurl": "http://rca-api.rca.vpc.realestate.com.au/",
+	"method": "POST",
+	"headers": {
+		"Accept": "application/vnd.rea.searchresults+json",
+		"Content-Type": "application/vnd.rea.search+json"
+	},
+    "cases": [
+        {
+            "path": "searches",
+            "data": "requests/query-listing-in-richmond.json",
+            "success": "Status: 201"
+        }, 
+        {
+        	"path": "searches",
+        	"data": "requests/query-listing-in-nowhere.json",
+        	"success": "Status: 201"
+        }
+    ]
+}

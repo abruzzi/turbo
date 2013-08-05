@@ -1,0 +1,20 @@
+GEM
+  remote: http://ruby.taobao.org/
+  specs:
+    escort (0.4.0)
+      nesty
+    json (1.8.0)
+    multi_json (1.7.8)
+    nesty (1.0.2)
+    ppjson (0.2.0)
+      escort
+      multi_json
+      yajl-ruby
+    yajl-ruby (1.1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  json
+  ppjson
