@@ -7,9 +7,13 @@ class Turbo
 		p @conf
 	end
 
-	def run
-		Dir.glob(@conf['scenarios_path']) do |json_file|
-			run_scenario(json_file)
+	def run(scenario=nil)
+		if scenario
+			run_scenario(scenario)
+		else
+			Dir.glob(@conf['scenarios_path']) do |json_file|
+				run_scenario(json_file)
+			end
 		end
 	end
 
@@ -50,11 +54,15 @@ class Turbo
 		config['cases'].each do |caze|
 			path = config['baseurl'] + caze['path']
 			data = config['method'] == "POST" ? "-d @#{caze['data']}" : ""
-			command = "curl -is #{headers} #{method} #{data} #{path}"
+			debug = @conf['debug'] == 'true' || config['debug'] == 'true' ? "-D - -o debug.log" : ""
+			command = "curl -is #{headers} #{method} #{data} #{path} #{debug}"
 			puts "#{config['method']} #{path}"
+			puts command
 			system "#{command} | ack \"#{caze['success']}\"; ./bin/coloroutput $?"
 		end
 	end
 end
 
+# Turbo.new.run('scenarios/local-user-post.json')
+# Turbo.new.run('scenarios/local-user-get.json')
 Turbo.new.run

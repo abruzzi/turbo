@@ -3,7 +3,6 @@
 	"method": "POST",
 	"headers": {
 		"Accept": "application/json",
-		"Content-Type": "application/json",
-		"rea-api-key": "test-key--e3ffa168425841bc2aa989ebf8510234"
+		"Content-Type": "application/json"
 	}
 }

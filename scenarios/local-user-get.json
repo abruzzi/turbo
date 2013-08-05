@@ -1,0 +1,10 @@
+{
+    "baseurl": "http://localhost:9292/",
+	"method": "GET",
+    "cases": [
+        {
+            "path": "visitors",
+            "success": "200 OK"
+        }
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "baseurl": "http://localhost:9292/",
+	"method": "POST",
+    "cases": [
+        {
+            "path": "visitors",
+            "data": "requests/grape-user.json",
+            "success": "201 Created"
+        }
+    ]
+}
