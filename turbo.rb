@@ -35,6 +35,11 @@ class Turbo
 		common = load_common
 		config = common.rmerge(load_scenario(scenario))
 
+		if config['disabled']
+			puts "skipping scenario"
+			return
+		end
+
 		# generate all headers
 		headers = generate_header(config['headers'])
 		
@@ -47,7 +52,7 @@ class Turbo
 			data = config['method'] == "POST" ? "-d @#{caze['data']}" : ""
 			command = "curl -is #{headers} #{method} #{data} #{path}"
 			puts "#{config['method']} #{path}"
-			system "#{command} | ack \"#{caze['success']}\"; ./coloroutput $?"
+			system "#{command} | ack \"#{caze['success']}\"; ./bin/coloroutput $?"
 		end
 	end
 end
