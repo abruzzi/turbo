@@ -47,7 +47,7 @@ class Turbo
 			data = config['method'] == "POST" ? "-d @#{caze['data']}" : ""
 			command = "curl -is #{headers} #{method} #{data} #{path}"
 			puts "#{config['method']} #{path}"
-			system "#{command} | ack \"#{caze['success']}\""
+			system "#{command} | ack \"#{caze['success']}\"; ./coloroutput $?"
 		end
 	end
 end

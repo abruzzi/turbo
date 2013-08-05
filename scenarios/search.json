@@ -14,7 +14,7 @@
         {
         	"path": "searches",
         	"data": "requests/query-listing-in-nowhere.json",
-        	"success": "Status: 201"
+        	"success": "Status: 202"
         }
     ]
 }
