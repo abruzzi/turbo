@@ -1,0 +1,16 @@
+{
+    "baseurl": "https://mycommercial-api.sydvpc-e2e.realestate.com.au/",
+	"method": "GET",
+	"headers": {
+		"Accept": "application/json",
+		"Content-Type": "application/json",
+        "myrca-api-key": "myrca-xm9asmcz0zxz6ubt",
+        "Token": "cWl1Lmp1bnRhb0ByZWEtZ3JvdXAuY29tOjE0NzAzMDQ4MjU6MzAwOTJiMjE2YWYyYTZiNzU3ZjJiYWFhOTRhYTkwMGU="
+	},
+    "cases": [
+        {
+            "path": "/bookmarks",
+            "success": "Status: 200"
+        }
+    ]
+}

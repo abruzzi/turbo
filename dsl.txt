@@ -1,0 +1,16 @@
+world do
+    user
+    before do
+        user = register
+    end
+
+    after do
+        user = nil
+    end
+
+    worlflow do
+        login
+        bookmark
+        logout
+    end
+end

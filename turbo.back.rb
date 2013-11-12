@@ -53,7 +53,7 @@ class Turbo
 		# run each case here
 		config['cases'].each do |caze|
 			path = config['baseurl'] + caze['path']
-			data = config['method'] == "POST" || config['method'] == "PUT" ? "-d @#{caze['data']}" : ""
+			data = config['method'] == "POST" ? "-d @#{caze['data']}" : ""
 			debug = @conf['debug'] == 'true' || config['debug'] == 'true' ? "-D - -o debug.log" : ""
 			command = "curl -is #{headers} #{method} #{data} #{path} #{debug}"
 			puts "#{config['method']} #{path}"
@@ -66,5 +66,9 @@ end
 # Turbo.new.run('scenarios/local-user-post.json')
 # Turbo.new.run('scenarios/local-user-get.json')
 # Turbo.new.run
-# Turbo.new.run "scenarios/mycommercial-bookmark-create.json"
-Turbo.new.run "scenarios/mycommercial-bookmark.json"
+# Turbo.new.run('scenarios/mycommercial-create.json')
+# Turbo.new.run('scenarios/mycommercial-login.json')
+# Turbo.new.run('scenarios/mycommercial-forgot.json')
+# Turbo.new.run('scenarios/mycommercial-reset.json')
+# Turbo.new.run('scenarios/mycommercial-profile.json')
+# Turbo.new.run('scenarios/mycommercial-bookmark.json')
