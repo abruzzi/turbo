@@ -2,10 +2,35 @@ require 'json'
 require './hash_recursive_merge.rb'
 
 class Turbo
+    def before
+        system "#{@pre_command}"
+    end
+
+    def after
+        system "#{@post_command}"
+    end
+
 	def initialize(conf="turbo.conf")
 		@conf = JSON.parse(File.read(conf))
 		p @conf
 	end
+
+    def run_workflow(workflow=nil)
+        dirname = File.dirname(File.absolute_path(workflow))
+        workflow = JSON.parse(File.read(workflow))
+        
+        @pre_command = dirname + '/' + workflow['before']
+        @post_command = dirname + '/' + workflow['after']
+
+        scenarios = workflow['scenarios']
+        
+        before
+        scenarios.each do |scenario|
+            p dirname + '/' + scenario
+            run_scenario(dirname + '/' + scenario)
+        end
+        after
+    end
 
 	def run(scenario=nil)
 		if scenario
@@ -67,4 +92,8 @@ end
 # Turbo.new.run('scenarios/local-user-get.json')
 # Turbo.new.run
 # Turbo.new.run "scenarios/mycommercial-bookmark-create.json"
-Turbo.new.run "scenarios/mycommercial-bookmark.json"
+# Turbo.new("echo 'a'", "echo 'b'").run("scenarios/mycommercial-bookmark.json")
+
+# Turbo.new.run("scenarios/login-flow.json")
+Turbo.new.run_workflow("scenarios/mycommercial/login-flow.json")
+

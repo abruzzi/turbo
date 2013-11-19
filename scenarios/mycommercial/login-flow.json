@@ -1,0 +1,7 @@
+{
+    "before": "bin/add.sh",
+    "scenarios": [
+        "mycommercial-bookmark.json"
+    ],
+    "after": "bin/remove.sh"
+}
