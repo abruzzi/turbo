@@ -1,5 +1,5 @@
 require 'json'
-require './hash_recursive_merge.rb'
+require './lib/hash_recursive_merge.rb'
 
 class Turbo
     def before
@@ -10,8 +10,9 @@ class Turbo
         system "#{@post_command}"
     end
 
-	def initialize(conf="turbo.conf")
+	def initialize(conf="config/turbo.conf")
 		@conf = JSON.parse(File.read(conf))
+        @conf['conf_path'] = File.dirname(File.absolute_path(conf))
 		p @conf
 	end
 
@@ -19,15 +20,16 @@ class Turbo
         dirname = File.dirname(File.absolute_path(workflow))
         workflow = JSON.parse(File.read(workflow))
         
-        @pre_command = dirname + '/' + workflow['before']
-        @post_command = dirname + '/' + workflow['after']
+        @workflow_path = dirname + '/'
+        @pre_command = @workflow_path + workflow['before']
+        @post_command = @workflow_path + workflow['after']
 
         scenarios = workflow['scenarios']
         
         before
         scenarios.each do |scenario|
             p dirname + '/' + scenario
-            run_scenario(dirname + '/' + scenario)
+            run_scenario(@workflow_path + scenario)
         end
         after
     end
@@ -53,7 +55,7 @@ class Turbo
 	end
 
 	def load_common
-		JSON.parse(File.read(@conf['common_conf']))
+		JSON.parse(File.read(@conf['conf_path'] + '/' + @conf['common_conf']))
 	end
 
 	def load_scenario(scenario)
@@ -78,7 +80,7 @@ class Turbo
 		# run each case here
 		config['cases'].each do |caze|
 			path = config['baseurl'] + caze['path']
-			data = config['method'] == "POST" || config['method'] == "PUT" ? "-d @#{caze['data']}" : ""
+			data = config['method'] == "POST" || config['method'] == "PUT" ? "-d @#{@workflow_path}#{caze['data']}" : ""
 			debug = @conf['debug'] == 'true' || config['debug'] == 'true' ? "-D - -o debug.log" : ""
 			command = "curl -is #{headers} #{method} #{data} #{path} #{debug}"
 			puts "#{config['method']} #{path}"
@@ -95,5 +97,6 @@ end
 # Turbo.new("echo 'a'", "echo 'b'").run("scenarios/mycommercial-bookmark.json")
 
 # Turbo.new.run("scenarios/login-flow.json")
-Turbo.new.run_workflow("scenarios/mycommercial/login-flow.json")
+# Turbo.new.run_workflow("scenarios/mycommercial/login-flow.json")
+Turbo.new.run_workflow("scenarios/moco/moco-flow.json")
 

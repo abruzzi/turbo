@@ -1,0 +1,14 @@
+{
+    "baseurl": "http://localhost:9527",
+	"method": "GET",
+	"headers": {
+		"Accept": "application/json",
+		"Content-Type": "application/json"
+	},
+    "cases": [
+        {
+            "path": "/resource",
+            "success": "200 OK"
+        }
+    ]
+}
