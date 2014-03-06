@@ -1,8 +1,0 @@
-{
-    "before": "bin/add.sh",
-    "scenarios": [
-        "resource-create.json",
-        "resource-get.json"
-    ],
-    "after": "bin/remove.sh"
-}

@@ -1,0 +1,48 @@
+#!/usr/bin/env ruby
+
+require "thor"
+require "turbo"
+
+def get_real_path(path)
+  File.join(File.dirname(File.expand_path(__FILE__)), "../lib/#{path}")
+end
+
+class TurboApp < Thor
+
+  desc "generate", "Generate a workflow"
+  def generate(name)
+
+    if File.exist? "workflows/#{name}"
+      puts "workflow #{name} has already exist under workflows/#{name}"
+      return
+    end
+
+    FileUtils.mkdir_p "workflows"
+    FileUtils.mkdir_p "workflows/#{name}"
+
+    FileUtils.mkdir_p "workflows/#{name}/bin"
+    FileUtils.mkdir_p "workflows/#{name}/data"
+    FileUtils.mkdir_p "workflows/#{name}/scenarios"
+
+    FileUtils.copy File.join(File.dirname(File.expand_path(__FILE__)), "../lib/templates/before.sh"), "workflows/#{name}/bin/before.sh"
+    FileUtils.copy File.join(File.dirname(File.expand_path(__FILE__)), "../lib/templates/after.sh"), "workflows/#{name}/bin/after.sh"
+
+    FileUtils.copy File.join(File.dirname(File.expand_path(__FILE__)), "../lib/templates/resource.json"), "workflows/#{name}/data/resource.json"
+    FileUtils.copy File.join(File.dirname(File.expand_path(__FILE__)), "../lib/templates/resource-get.json"), "workflows/#{name}/scenarios/resource-get.json"
+
+    FileUtils.copy File.join(File.dirname(File.expand_path(__FILE__)), "../lib/templates/workflow.json"), "workflows/#{name}/workflow.json"
+
+    puts "workflow #{name} is generated under workflows/#{name}"
+  end
+
+  desc "start", "specify the workflow name"
+  method_option :config, :aliases => "-c", :desc => "configuration file"
+  def start(workflow)
+    config = options[:config]
+    turbo = Turbo.new(config)
+    turbo.run_workflow(workflow)
+  end
+
+end
+
+TurboApp.start
