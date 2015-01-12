@@ -24,3 +24,11 @@ Success: curl -is -H "Accept: application/json" -H "Content-Type: application/js
 curl -is -H "Accept: application/json" -H "Content-Type: application/json" -X GET  http://localhost:12306/userinfo -D - -o debug.log
 Error: curl -is -H "Accept: application/json" -H "Content-Type: application/json" -X GET  http://localhost:12306/userinfo -D - -o debug.log
 ```
+起一个端口：
+python -m SimpleHTTPServer 9527
+
+本地更改之后执行一下命令生成一个本地gem包
+
+gem build turbo.gemspec
+
+gem install localPath/turbogenerator-XXX.gem
