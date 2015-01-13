@@ -3,3 +3,4 @@
 scenarios/*.json
 requests/*.json
 *.gem
+.idea/
