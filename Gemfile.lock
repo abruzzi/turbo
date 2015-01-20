@@ -6,6 +6,7 @@ GEM
       tins (~> 1.0)
     thor (0.18.1)
     tins (1.0.0)
+    bacon (1.2.0)
 
 PLATFORMS
   ruby
