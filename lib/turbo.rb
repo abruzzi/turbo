@@ -118,20 +118,38 @@ class Turbo
 
       debug = @conf['debug'] == 'true' || config['debug'] == 'true' ? "-D - -o debug.log" : ""
 
-      real_command = "curl -is #{headers} #{method} #{data} #{path} #{debug}"
+      real_command = "curl -Is #{headers} #{method} #{data} #{path} #{debug}"
       puts real_command
       command = "#{real_command} | grep --color=auto -E \"#{caze['success']}\""
 
+      @debug_file = '/Users/wjia/WorkShops/homework/debug.log'
+      if(File.exist?(@debug_file))
+        system("rm #{@debug_file}")
+      end
+      
       ret = system(command)
       @scenarios_num += 1
-      
-      if ret
-        puts "#{'Success'}: #{real_command}".green
-        @run_success += 1
-      else
-        puts "#{'Error'}: #{real_command}".red
-        @run_failed += 1
-      end
+      outputs(ret, caze)
 		end
-	end
+  end
+
+  def outputs(ret, caze)
+    if(File.exist?(@debug_file))
+      arr = IO.readlines(@debug_file)
+    end
+
+    if ret
+      @run_success += 1
+      puts "Success: #{arr[0]}".green
+    else
+      @run_failed += 1
+      if arr
+        puts "Expected: #{caze['success']}".red
+        puts "Actual: #{arr[0]}".red
+      else
+        puts "Expected: #{caze['success']}".red
+        puts 'Actual: Connection refused'.red
+      end
+    end
+  end
 end
