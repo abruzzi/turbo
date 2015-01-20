@@ -48,11 +48,15 @@ class Turbo
       @post_command = "#{@workflow_path}/#{wf['after']}"
 
       scenarios = wf['scenarios']
-
+      @scenarios_num = 0
+      @run_success = 0
+      @run_failed = 0
       before
       scenarios.each do |scenario|
           run_scenario("#{@workflow_path}/scenarios/#{scenario}")
       end
+      puts "#{@scenarios_num} scenarios," + " #{@run_success} success,".green + " #{@run_failed} failures".red
+
       after
 
   end
@@ -119,11 +123,14 @@ class Turbo
       command = "#{real_command} | grep --color=auto -E \"#{caze['success']}\""
 
       ret = system(command)
-
+      @scenarios_num += 1
+      
       if ret
         puts "#{'Success'}: #{real_command}".green
+        @run_success += 1
       else
         puts "#{'Error'}: #{real_command}".red
+        @run_failed += 1
       end
 		end
 	end
