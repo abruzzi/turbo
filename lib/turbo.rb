@@ -46,6 +46,7 @@ class Turbo
       @workflow_path = "workflows/#{workflow}"
       @pre_command = "#{@workflow_path}/#{wf['before']}"
       @post_command = "#{@workflow_path}/#{wf['after']}"
+      @debug_file = '/Users/wjia/WorkShops/homework/debug.log'
 
       scenarios = wf['scenarios']
       @scenarios_num = 0
@@ -122,7 +123,6 @@ class Turbo
       puts real_command
       command = "#{real_command} | grep --color=auto -E \"#{caze['success']}\""
 
-      @debug_file = '/Users/wjia/WorkShops/homework/debug.log'
       if(File.exist?(@debug_file))
         system("rm #{@debug_file}")
       end
