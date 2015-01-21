@@ -112,8 +112,12 @@ class Turbo
 		# generate HTTP method
 		method = "-X #{config['method']}"
 
+    scenario_name = config['scenario_name']
+
 		# run each case here
 		config['cases'].each do |caze|
+      puts "scenario name: #{scenario_name}; case name: #{caze['case_name']}.".yellow
+
 			path = config['baseurl'] + caze['path']
 			data = config['method'] == "POST" || config['method'] == "PUT" ? "-d @#{@workflow_path}/#{caze['data']}" : ""
 
