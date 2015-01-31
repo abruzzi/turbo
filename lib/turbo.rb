@@ -123,7 +123,7 @@ class Turbo
 
       debug = @conf['debug'] == 'true' || config['debug'] == 'true' ? "-D - -o debug.log" : ""
 
-      real_command = "curl -Is #{headers} #{method} #{data} #{path} #{debug}"
+      real_command = "curl -is #{headers} #{method} #{data} #{path} #{debug}"
       puts real_command
       command = "#{real_command} | grep --color=auto -E \"#{caze['success']}\""
 
