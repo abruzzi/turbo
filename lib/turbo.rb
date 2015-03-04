@@ -60,8 +60,6 @@ class Turbo
       scenarios.each do |scenario|
           run_scenario("#{@workflow_path}/scenarios/#{scenario}")
       end
-      puts "#{@scenarios_num} scenarios," + " #{@run_success} success,".green + " #{@run_failed} failures".red
-
       after
 
   end
@@ -127,15 +125,12 @@ class Turbo
 
 		# run each case here
 		config['cases'].each do |caze|
-      puts "scenario name: #{scenario_name}; case name: #{caze['case_name']}.".yellow
-
 			path = config['baseurl'] + caze['path']
 			data = config['method'] == "POST" || config['method'] == "PUT" ? "-d @#{@workflow_path}/#{caze['data']}" : ""
 
       debug = @conf['debug'] == 'true' || config['debug'] == 'true' ? "-D - -o debug.log" : ""
 
       real_command = "curl -is #{headers} #{method} #{data} #{path} #{debug}"
-      puts real_command
       command = "#{real_command} | grep --color=auto -E \"#{caze['success']}\""
 
       if(File.exist?(@debug_file))
@@ -154,15 +149,18 @@ class Turbo
 
     if ret
       @run_success += 1
-      puts "Success: #{arr[0]}".green
+      puts "ok + #{@scenarios_num}".green
+      puts "#{arr[0]}".green
     else
       @run_failed += 1
       if arr
+        puts "not ok #{@scenarios_num}".red
         puts "Expected: #{caze['success']}".red
         puts "Actual: #{arr[0]}".red
       else
+        puts "not ok #{@scenarios_num}".red
         puts "Expected: #{caze['success']}".red
-        puts 'Actual: Connection refused'.red
+        puts "Actual: Connection refused".red
       end
     end
   end
