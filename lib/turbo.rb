@@ -54,6 +54,10 @@ class Turbo
       @run_failed = 0
       before
       scenarios.each do |scenario|
+        calculate_scenario_num("#{@workflow_path}/scenarios/#{scenario}")
+      end
+      puts "1..#{@scenarios_num}"
+      scenarios.each do |scenario|
           run_scenario("#{@workflow_path}/scenarios/#{scenario}")
       end
       puts "#{@scenarios_num} scenarios," + " #{@run_success} success,".green + " #{@run_failed} failures".red
@@ -96,7 +100,14 @@ class Turbo
 	def load_scenario(scenario)
 		JSON.parse(File.read(scenario))
 	end
+  def calculate_scenario_num(scenario)
+    common = load_common
+    config = common.rmerge(load_scenario(scenario))
+    config['cases'].each do |caze|
+      @scenarios_num += 1
+    end
 
+  end
 	def run_scenario(scenario)
 		common = load_common
 		config = common.rmerge(load_scenario(scenario))
@@ -130,9 +141,8 @@ class Turbo
       if(File.exist?(@debug_file))
         system("rm #{@debug_file}")
       end
-      
+
       ret = system(command)
-      @scenarios_num += 1
       outputs(ret, caze)
 		end
   end
