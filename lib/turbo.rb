@@ -50,7 +50,7 @@ class Turbo
 
       scenarios = wf['scenarios']
       @total_scenarios_num = 0
-      @scenarios_num = 0
+      @scenarios_num = 1
       @run_success = 0
       @run_failed = 0
       before
@@ -140,6 +140,7 @@ class Turbo
 
       ret = system(command)
       outputs(ret, caze)
+      @scenarios_num += 1
 		end
   end
 
@@ -150,18 +151,18 @@ class Turbo
 
     if ret
       @run_success += 1
-      puts "ok + #{@scenarios_num}".green
-      puts "#{arr[0]}".green
+      puts "ok #{@scenarios_num}".green
+      puts "    " + "#{arr[0]}".green
     else
       @run_failed += 1
       if arr
         puts "not ok #{@scenarios_num}".red
-        puts "Expected: #{caze['success']}".red
-        puts "Actual: #{arr[0]}".red
+        puts "    " + "Expected: #{caze['success']}".red
+        puts "    " + "Actual: #{arr[0]}".red
       else
         puts "not ok #{@scenarios_num}".red
-        puts "Expected: #{caze['success']}".red
-        puts "Actual: Connection refused".red
+        puts "    " + "Expected: #{caze['success']}".red
+        puts "    " + "Actual: Connection refused".red
       end
     end
   end
