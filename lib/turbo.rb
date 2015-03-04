@@ -49,6 +49,7 @@ class Turbo
       @debug_file = 'debug.log'
 
       scenarios = wf['scenarios']
+      @total_scenarios_num = 0
       @scenarios_num = 0
       @run_success = 0
       @run_failed = 0
@@ -56,7 +57,7 @@ class Turbo
       scenarios.each do |scenario|
         calculate_scenario_num("#{@workflow_path}/scenarios/#{scenario}")
       end
-      puts "1..#{@scenarios_num}"
+      puts "1..#{@total_scenarios_num}"
       scenarios.each do |scenario|
           run_scenario("#{@workflow_path}/scenarios/#{scenario}")
       end
@@ -102,7 +103,7 @@ class Turbo
     common = load_common
     config = common.rmerge(load_scenario(scenario))
     config['cases'].each do |caze|
-      @scenarios_num += 1
+      @total_scenarios_num += 1
     end
 
   end
