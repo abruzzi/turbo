@@ -138,10 +138,16 @@ class Turbo
         system("rm #{@debug_file}")
       end
 
-      ret = system(command)
+      ret = ((caze['success'].is_a?Hash) && (caze['success'].has_key? 'regexp')) ? (regexp(real_command, caze['success']['regexp'])) : (system(command))
       outputs(ret, caze)
       @scenarios_num += 1
 		end
+  end
+
+  def regexp command, pattern
+    result = `#{command}`
+    http_code = result.split(/\r?\n/).first.split(' ')[1]
+    pattern.split('|').include? http_code
   end
 
   def outputs(ret, caze)
