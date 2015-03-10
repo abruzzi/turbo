@@ -2,6 +2,9 @@
 
 require 'json'
 require 'term/ansicolor'
+require 'rexml/document'
+include REXML
+
 
 # Author::      Simone Carletti <weppos@weppos.net>
 # Copyright::   2007-2008 The Authors
@@ -138,10 +141,39 @@ class Turbo
         system("rm #{@debug_file}")
       end
 
-      ret = ((caze['success'].is_a?Hash) && (caze['success'].has_key? 'regexp')) ? (regexp(real_command, caze['success']['regexp'])) : (system(command))
+      # ret = ((caze['success'].is_a?Hash) && (caze['success'].has_key? 'regexp')) ? (regexp(real_command, caze['success']['regexp'])) : (system(command))
+
+      if (caze['success'].is_a? Hash)
+        if (caze['success'].has_key? 'regexp')
+          puts real_command
+          ret = regexp(real_command, caze['success']['regexp'])
+        elsif ((caze['success'].has_key? 'xpath'))
+          ret = xpath(real_command, caze['success']['xpath'])
+        end
+      else
+        ret = system(command)
+      end
+
       outputs(ret, caze)
       @scenarios_num += 1
-		end
+  		end
+  end
+
+  def xpath command, pattern
+    `#{command}`
+    xmldoc = Document.new(File.new(@debug_file))
+    matched_times = 0
+    father_node_numbers =0
+
+    father_node = pattern.match(/\/\/[a-z A-Z]+/).to_s
+    child_node = pattern.match(/\[\@[a-z A-Z]+\=\'[a-z A-Z]+\'\]/).to_s
+    child_node_key = child_node.match(/\[\@[a-z A-Z]+/).to_s.split('@')[1]
+    child_node_value =child_node.match(/\=\'[a-z A-Z]+/).to_s.split('\'')[1]
+
+    xmldoc.elements.each(father_node) {|e|father_node_numbers +=1}
+    xmldoc.elements.each(father_node+"/"+child_node_key) {|result| matched_times +=1 if result.text ==child_node_value }
+
+    matched_times >= father_node_numbers
   end
 
   def regexp command, pattern

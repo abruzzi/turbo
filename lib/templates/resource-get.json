@@ -6,10 +6,18 @@
     "Accept": "application/json",
     "Content-Type": "application/json"
   },
-    "cases": [
-        {   "case_name": "my case name",
-            "path": "/resource",
-            "success": "200 OK"
-        }
-    ]
+  "cases": [
+    {
+      "case_name": "my case name",
+      "path": "/resource",
+      "success": "200 OK"
+    },
+    {
+      "case_name": "my case name",
+      "path": "/resource",
+      "success": {
+        "xpath": "//items[@name='yy']"
+      }
+    }
+  ]
 }
