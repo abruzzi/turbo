@@ -122,7 +122,7 @@ class Turbo
 		# generate HTTP method
 		method = "-X #{config['method']}"
 
-    scenario_name = config['scenario_name']
+    @scenario_name = config['scenario_name']
 
 		# run each case here
 		config['cases'].each do |caze|
@@ -157,18 +157,18 @@ class Turbo
 
     if ret
       @run_success += 1
-      puts 'ok #{@scenarios_num}'.green
-      puts '     ' + '#{arr[0]}'.green
+      puts "ok Description # #{@scenario_name} #{caze['case_name']}".green
+      puts "\t#{arr[0]}".green
     else
       @run_failed += 1
       if arr
-        puts "not ok #{@scenarios_num}".red
-        puts '     ' + "Expected: #{caze['success']}".red
-        puts '     ' + 'Actual: #{arr[0]}'.red
+        puts "not ok Description # #{@scenario_name} #{caze['case_name']}".red
+        puts "\tExpected: #{caze['success']}".red
+        puts "\tActual: #{arr[0]}".red
       else
-        puts "not ok #{@scenarios_num}".red
-        puts '     ' + "Expected: #{caze['success']}".red
-        puts '     ' + 'Actual: Connection refused'.red
+        puts "not ok Description # #{@scenario_name} #{caze['case_name']}".red
+        puts "\tExpected: #{caze['success']}".red
+        puts "\tActual: Connection refused".red
       end
     end
   end
