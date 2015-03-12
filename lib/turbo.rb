@@ -157,18 +157,17 @@ class Turbo
 
     if ret
       @run_success += 1
-      puts "ok Description # #{@scenario_name} #{caze['case_name']}".green
-      puts "\t#{arr[0]}".green
+      puts "ok - #{@scenario_name} #{caze['case_name']}".green
     else
       @run_failed += 1
       if arr
-        puts "not ok Description # #{@scenario_name} #{caze['case_name']}".red
-        puts "\tExpected: #{caze['success']}".red
-        puts "\tActual: #{arr[0]}".red
+        puts "not ok - #{@scenario_name} #{caze['case_name']}".red
+        puts "#\tExpected: #{caze['success']}".red
+        puts "#\tActual: #{arr[0]}".red
       else
-        puts "not ok Description # #{@scenario_name} #{caze['case_name']}".red
-        puts "\tExpected: #{caze['success']}".red
-        puts "\tActual: Connection refused".red
+        puts "not ok - #{@scenario_name} #{caze['case_name']}".red
+        puts "#\tExpected: #{caze['success']}".red
+        puts "#\tActual: Connection refused".red
       end
     end
   end
