@@ -135,23 +135,19 @@ class Turbo
       debug = @conf['debug'] == 'true' || config['debug'] == 'true' ? "-D - -o debug.log" : ""
 
       real_command = "curl -is #{headers} #{method} #{data} #{path} #{debug}"
-      command = "#{real_command} | grep --color=auto -E \"#{caze['success']}\""
 
       if(File.exist?(@debug_file))
         system("rm #{@debug_file}")
       end
 
-      # ret = ((caze['success'].is_a?Hash) && (caze['success'].has_key? 'regexp')) ? (regexp(real_command, caze['success']['regexp'])) : (system(command))
-
       if (caze['success'].is_a? Hash)
         if (caze['success'].has_key? 'regexp')
-          puts real_command
           ret = regexp(real_command, caze['success']['regexp'])
         elsif ((caze['success'].has_key? 'xpath'))
           ret = xpath(real_command, caze['success']['xpath'])
         end
       else
-        ret = system(command)
+        ret = regular(real_command, caze['success'])
       end
 
       outputs(ret, caze)
@@ -178,8 +174,18 @@ class Turbo
 
   def regexp command, pattern
     result = `#{command}`
-    http_code = result.split(/\r?\n/).first.split(' ')[1]
-    pattern.split('|').include? http_code
+    if result != ""
+      http_code = result.split(/\r?\n/).first.split(' ')[1]
+      pattern.split('|').include? http_code
+    end
+  end
+
+  def regular command, pattern
+    result = `#{command}`
+    if result != ""
+      http_code = result.split(/\r?\n/).first.split(' ')[1]
+      pattern.include? http_code
+    end
   end
 
   def outputs(ret, caze)
@@ -195,7 +201,7 @@ class Turbo
       if arr
         puts "not ok - #{@scenario_name} #{caze['case_name']}".red
         puts "#\tExpected: #{caze['success']}".red
-        puts "#\tActual: #{arr[0]}".red
+        print "#\tActual: #{arr[0]}".red
       else
         puts "not ok - #{@scenario_name} #{caze['case_name']}".red
         puts "#\tExpected: #{caze['success']}".red
