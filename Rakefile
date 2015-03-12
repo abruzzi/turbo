@@ -1,6 +1,8 @@
+require "bundler/version"
 
-desc 'initialize a scenario'
-
-task :init do
-
+desc 'build the gem'
+task :build do
+    system "gem build turbo.gemspec"
 end
+
+task :default => [:build]
