@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require "thor"
+require 'term/ansicolor'
 require "turbo"
 
 def get_real_path(path)
@@ -13,7 +14,7 @@ class TurboApp < Thor
   def generate(name)
 
     if File.exist? "workflows/#{name}"
-      puts "workflow #{name} has already exist under workflows/#{name}"
+      puts "workflow #{name.green} has already exist under workflows/#{name}"
       return
     end
 
@@ -32,7 +33,8 @@ class TurboApp < Thor
 
     FileUtils.copy File.join(File.dirname(File.expand_path(__FILE__)), "../lib/templates/workflow.json"), "workflows/#{name}/workflow.json"
 
-    puts "workflow #{name} is generated under workflows/#{name}"
+    puts "Workflow `#{name.green}` is generated under workflows/#{name}"
+    puts "Run `turbo start #{name.green}` to start the workflow"
   end
 
   desc "start", "specify the workflow name"
@@ -40,9 +42,24 @@ class TurboApp < Thor
   def start(workflow)
     config = options[:config]
     turbo = Turbo.new(config)
+
+    if(!File.exist?("workflows/#{workflow}/workflow.json"))
+      puts "Workflow `#{workflow.green}` does not exist"
+      puts "Run `turbo generate #{workflow.green}` to generate it first"
+      return
+    end
+
     turbo.run_workflow(workflow)
   end
 
+  desc "list", "list all workflows"
+  def list
+    if(File.exist?("workflows"))
+      system ('ls workflows/')
+    else
+      puts "No workflow found, you can generate one by using `turob generate my-workflow`"
+    end
+  end
 end
 
 TurboApp.start

@@ -102,14 +102,15 @@ class Turbo
 	def load_scenario(scenario)
 		JSON.parse(File.read(scenario))
 	end
+
   def calculate_scenario_num(scenario)
     common = load_common
     config = common.rmerge(load_scenario(scenario))
     config['cases'].each do |caze|
       @total_scenarios_num += 1
     end
-
   end
+
 	def run_scenario(scenario)
 		common = load_common
 		config = common.rmerge(load_scenario(scenario))
@@ -157,6 +158,11 @@ class Turbo
 
   def xpath command, pattern
     `#{command}`
+    
+    if(!File.exist?(@debug_file)) 
+      return false
+    end
+
     xmldoc = Document.new(File.new(@debug_file))
     matched_times = 0
     father_node_numbers =0
