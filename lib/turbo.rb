@@ -6,8 +6,8 @@ require 'hashugar'
 require 'rexml/document'
 include REXML
 
-require './hash_recursive'
-require './commander'
+require 'hash_recursive'
+require 'commander'
 
 class String
   include Term::ANSIColor
@@ -34,10 +34,6 @@ class Turbo
       @run_failed = 0
 
       execute_before_script
-      scenarios.each do |scenario|
-        calculate_scenario_num("#{@workflow_path}/scenarios/#{scenario}")
-      end
-
       scenarios.each do |scenario|
           run_scenario("#{@workflow_path}/scenarios/#{scenario}")
       end

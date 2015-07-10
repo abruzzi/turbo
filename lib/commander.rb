@@ -8,7 +8,7 @@ require 'term/ansicolor'
 require 'rexml/document'
 include REXML
 
-require './value_object'
+require 'value_object'
 
 
 class String
@@ -20,33 +20,33 @@ def verfiy_xpath(caze, result)
 	nodes = XPath.match(xmldoc, "#{caze.success.content}")
 
 	if nodes != nil
-		puts "\tCase: ['#{caze.name}'] passed".green
+		puts "Case: ['#{caze.name}'] passed".green
 	else
-		puts "\tCase: ['#{caze.name}'] failed\nExpected: #{caze.success.content}\nGot: #{result}".red
+		puts "Case: ['#{caze.name}'] failed\nExpected: #{caze.success.content}\nGot: #{result}".red
 	end
-	puts "\t#{caze.type} #{caze.url}\n".cyan
+	puts "#{caze.type} #{caze.url}\n".cyan
 end
 
 def verify_regexp(caze, result)
 	x = result.match(/#{caze.success.content}/)
 
 	if x != nil
-		puts "\tCase: ['#{caze.name}'] passed".green
+		puts "Case: ['#{caze.name}'] passed".green
 	else
-		puts "\tCase: ['#{caze.name}'] failed\nExpected: #{caze.success.content}\nGot: #{result}".red
+		puts "Case: ['#{caze.name}'] failed\nExpected: #{caze.success.content}\nGot: #{result}".red
 	end
-	puts "\t#{caze.type} #{caze.url}\n".cyan
+	puts "#{caze.type} #{caze.url}\n".cyan
 end
 
 def verify_jsonpath(caze, result)
 	nodes = JsonPath.on(result, "#{caze.success.content}")
 
 	if nodes.size != 0
-		puts "\tCase: ['#{caze.name}'] passed".green
+		puts "Case: ['#{caze.name}'] passed".green
 	else
-		puts "\tCase: ['#{caze.name}'] failed\nExpected: #{nodes}\nGot: #{result}".red
+		puts "Case: ['#{caze.name}'] failed\nExpected: #{nodes}\nGot: #{result}".red
 	end
-	puts "\t#{caze.type} #{caze.url}\n".cyan
+	puts "#{caze.type} #{caze.url}\n".cyan
 end
 
 def verify(caze)

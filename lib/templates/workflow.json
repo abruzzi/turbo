@@ -1,7 +1,0 @@
-{
-    "before": "bin/before.sh",
-    "scenarios": [
-        "resource-get.json"
-    ],
-    "after": "bin/after.sh"
-}
