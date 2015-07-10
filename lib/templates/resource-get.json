@@ -17,11 +17,11 @@
         {   "name": "create posts",
             "path": "/api/fav-feeds",
             "type": "POST",
-            "data": "data/resource.json",
+            "data": "resource.json",
             "success": {
-                "part": "body",
-                "type": "jsonpath",
-                "content": "$.url"
+                "part": "header",
+                "type": "regexp",
+                "content": "405"
             }
         }
     ]

@@ -1,6 +1,5 @@
-curl 
--s
-<% if success.part == "header" %> -I <% end %>
+curl -s
+<% if success.part == "header" %> -D - -o /dev/null<% end %>
 
 -X <%= type %>
 

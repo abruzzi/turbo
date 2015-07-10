@@ -9,7 +9,7 @@ class TestCase
     @url = obj.url
     @headers = obj.headers || {}
     @type = obj.type || "GET"
-    @data_path = obj.data
+    @data_path = obj.data_path
     @success = obj.success
     @debug = obj.debug
   end
@@ -33,7 +33,6 @@ class SuccessDefinition
     	binding
   	end
 end
-
 
 class ExecutableTest
 	attr_accessor :name, :command, :success

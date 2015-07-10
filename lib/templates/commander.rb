@@ -24,25 +24,25 @@ def verify(caze)
 		nodes = XPath.match(xmldoc, "#{caze.success.content}")
 
 		if nodes != nil
-			puts "#{caze.name} passed".green
+			puts "Case [#{caze.name}] passed".green
 		else
-			puts "#{caze.name} failed\nExpected #{caze.success.content}\nGot #{result}".red
+			puts "Case [#{caze.name}] failed\nExpected: #{caze.success.content}\nGot: #{result}".red
 		end
 	when 'regexp'
 		x = result.match(/#{caze.success.content}/)
 
 		if x != nil
-			puts "#{caze.name} passed".green
+			puts "Case [#{caze.name}] passed".green
 		else
-			puts "#{caze.name} failed\nExpected #{caze.success.content}\nGot #{result}".red
+			puts "Case [#{caze.name}] failed\nExpected: #{caze.success.content}\nGot: #{result}".red
 		end		
 	when 'jsonpath'
 		nodes = JsonPath.on(result, "#{caze.success.content}")
 
 		if nodes.size != 0
-			puts "#{caze.name} passed".green
+			puts "Case [#{caze.name}] passed".green
 		else
-			puts "#{caze.name} failed\nExpected #{nodes}\nGot #{result}".red
+			puts "Case [#{caze.name}] failed\nExpected: #{nodes}\nGot: #{result}".red
 		end
 	end
 end
@@ -52,7 +52,6 @@ def generate_command(config)
 	template = File.read(File.join(File.dirname(File.expand_path(__FILE__)), 'command.erb'))
 	renderer = ERB.new(template)
 
-	commands = []
 	config.cases.each do |caze|
 		test_case = TestCase.new({
 			:name => caze.name,
@@ -73,7 +72,6 @@ def generate_command(config)
 		})
 
 		verify(test)
-		commands << test
 	end
 end
 
