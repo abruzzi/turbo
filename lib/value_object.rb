@@ -35,11 +35,13 @@ class SuccessDefinition
 end
 
 class ExecutableTest
-	attr_accessor :name, :command, :success
+	attr_accessor :name, :type, :url, :command, :success
 
 	def initialize(args)
 		obj = OpenStruct.new(args)
 		@name = obj.name
+    @url = obj.url
+    @type = obj.type || "GET"
 		@command = obj.command
 		@success = obj.success
 	end

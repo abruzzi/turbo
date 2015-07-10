@@ -1,0 +1,8 @@
+<% if nodes != nil %>
+	Case: ["<%= caze.name %>"] passed
+<% else %>
+	Case: ["<%= caze.name %>"] failed
+	Expected: <%= caze.success.content %>
+	Got: <%= result %>
+<% end %>
+	<%= caze.type %> <%= caze.url %>

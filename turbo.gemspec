@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
     s.name        = "turbogenerator"
-    s.version     = "0.4.0"
+    s.version     = "0.5.0"
     s.date        = "2015-03-12"
-    s.summary     = "turbo is a curl wrapper for make test based on HTTP more easier"
-    s.description = "turbo is a curl wrapper for make test based on HTTP more easier"
+    s.summary     = "Turbo is a HTTP API tester"
+    s.description = "Turbo is a HTTP API tester"
     s.authors     = ["Juntao Qiu", "Jia Wei", "Shen Tong", "Yan Yu", "Yang Mengmeng"]
     s.email       = "juntao.qiu@gmail.com"
     s.files       = Dir.glob("{bin,lib}/**/*")
