@@ -56,24 +56,25 @@ class Turbo
       @scenarios_num = 1
       @run_success = 0
       @run_failed = 0
-      before
+
+      execute_before_script
       scenarios.each do |scenario|
         calculate_scenario_num("#{@workflow_path}/scenarios/#{scenario}")
       end
+
       puts "1..#{@total_scenarios_num}"
       scenarios.each do |scenario|
           run_scenario("#{@workflow_path}/scenarios/#{scenario}")
       end
-      after
-
+      execute_after_script
   end
 
   private
-  def before
+  def execute_before_script
       system "#{@pre_command}"
   end
 
-  def after
+  def execute_after_script
       system "#{@post_command}"
   end
 

@@ -1,0 +1,18 @@
+{
+  "name": "xml",
+  "baseurl": "http://localhost:9999",
+  "headers": {
+    "Accept": "application/xml",
+    "Content-Type": "application/xml"
+  },
+    "cases": [
+        {   "name": "get books list",
+            "path": "/books.xml",
+            "success": {
+                "part": "body",
+                "type": "xpath",
+                "content": "//book"
+            }
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+curl 
+-s
+<% if success.part == "header" %> -I <% end %>
+
+-X <%= type %>
+
+<% if ['POST', 'PUT'].include? type %>
+--data @<%= data_path %>
+<% end %>
+
+<% headers.each_pair do |key, value| %>
+--header <%= key %>=<%= value %>
+<% end %>
+
+<%= url %> 
+
+<% if debug %>
+-D - -o debug.log
+<% end %>
