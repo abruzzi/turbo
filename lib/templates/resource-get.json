@@ -1,0 +1,28 @@
+{
+  "name": "posts",
+  "baseurl": "http://localhost:8080",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+    "cases": [
+        {   "name": "list posts",
+            "path": "/api/feeds",
+            "success": {
+                "part": "body",
+                "type": "jsonpath",
+                "content": "$[0].url"
+            }
+        },
+        {   "name": "create posts",
+            "path": "/api/fav-feeds",
+            "type": "POST",
+            "data": "resource.json",
+            "success": {
+                "part": "header",
+                "type": "regexp",
+                "content": "200 OK"
+            }
+        }
+    ]
+}
