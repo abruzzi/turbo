@@ -62,7 +62,7 @@ def verify(caze)
 	end
 end
 
-def generate_command(config)
+def generate_command(workflow_path, config)
 	template = File.read(File.join(File.dirname(File.expand_path(__FILE__)), 'templates/command.erb'))
 	renderer = ERB.new(template)
 
@@ -73,7 +73,7 @@ def generate_command(config)
 			:url => "#{config.baseurl}/#{caze.path}",
 			:headers => caze.headers,
 			:type => caze.type,
-			:data_path => caze.data,
+			:data_path => "#{workflow_path}/#{caze.data ? caze.data.strip : ''}",
 			:success => SuccessDefinition.new(caze.success),
 			:debug => caze.debug
 		})

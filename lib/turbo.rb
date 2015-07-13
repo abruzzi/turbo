@@ -78,7 +78,7 @@ class Turbo
   end
 
   def run_scenario(scenario)
-    generate_command(bootstrap(scenario))
+    generate_command(@workflow_path, bootstrap(scenario))
   end
 
 end

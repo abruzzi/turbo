@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
     s.name        = "turbogenerator"
-    s.version     = "0.5.0"
+    s.version     = "0.6.0"
     s.date        = "2015-03-12"
     s.summary     = "Turbo is a HTTP API tester"
     s.description = "Turbo is a HTTP API tester, it's a curl wrapper"
