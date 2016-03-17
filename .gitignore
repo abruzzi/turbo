@@ -5,3 +5,5 @@ requests/*.json
 *.gem
 .idea/
 .ruby-version
+.bundle
+vendor/
